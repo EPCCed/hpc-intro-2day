@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Scripts, variables, and loops</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/05-scripts.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../04-wildcards-pipes/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Scripts, variables, and loops</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../11-cluster/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 45 min
+      <br/>
+      <strong>Exercises:</strong> 10 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I turn a set of commands into a program?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Write a shell script</p>
+</li>
+	
+	<li><p>Understand and manipulate UNIX permissions</p>
+</li>
+	
+	<li><p>Understand shell variables and how to use them</p>
+</li>
+	
+	<li><p>Write a simple for loop</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<p>We now know a lot of UNIX commands! Wouldn’t it be great if we could
+save certain commands so that we could run them later or not have to type
+them out again? As it turns out, this is extremely easy to do. Saving a list
+of commands to a file is called a “shell script”. These shell scripts can be
+run whenever we want, and are a great way to automate our work.</p>
+
+<p>So how do we write a shell script, exactly? It turns out we can do this with
+a simple text editor. Start editing a file called “demo.sh” (to recap, we can
+do this with <code class="highlighter-rouge">nano demo.sh</code>). The “.sh” is the standard file extension
+for shell scripts that most people use.</p>
+
+<p>Our shell script will have two parts:</p>
+
+<ul>
+  <li>
+    <p>On the very first line, add <code class="highlighter-rouge"><span class="c">#!/bin/bash</span></code>. The <code class="highlighter-rouge">#!</code> (pronounced “hash-bang”) tells our computer what program to run our script with. In this case, we are telling it to run our script with our command-line shell (what we’ve been doing everything in so far). If we wanted our script to be run with something else, like Python, we could add <code class="highlighter-rouge"><span class="c">#!/usr/bin/python3</span></code></p>
+  </li>
+  <li>
+    <p>Now, anywhere below the first line, add <code class="highlighter-rouge">echo "Our script worked!"</code>. When our script runs, <code class="highlighter-rouge">echo</code> will happily print out <code class="highlighter-rouge">Our script worked!</code>.</p>
+  </li>
+</ul>
+
+<p>Our file should now look like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nb">echo</span> <span class="s2">"Our script worked!"</span>
+</code></pre></div></div>
+
+<p>Ready to run our program? 
+Let’s try running it:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ demo.sh 
+</code></pre></div></div>
+<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash: demo.sh: command not found...
+</code></pre></div></div>
+
+<p>Strangely enough, Bash can’t find our script.
+As it turns out, Bash will only look in certain directories for scripts to run.
+To run anything else, we need to tell Bash exactly where to look.
+To run a script that we wrote ourselves, we need to specify the full path to the
+file, followed by the filename. We could do this one of two ways: either with
+our absolute path <code class="highlighter-rouge">/home/jeff/demo.sh</code>, or with the relative path
+<code class="highlighter-rouge">./demo.sh</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./demo.sh
+</code></pre></div></div>
+<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash: ./demo.sh: Permission denied
+</code></pre></div></div>
+
+<p>There’s one last thing we need to do. 
+Before a file can be run, it needs “permission” to run. 
+Let’s look at our file’s permissions with <code class="highlighter-rouge">ls -l</code>:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -l
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-rw-rw-r--. 1 jeff jeff 12534006 Jan 16 18:50 bash-lesson.tar.gz
+-rw-rw-r--. 1 jeff jeff       40 Jan 16 19:41 demo.sh
+-rw-rw-r--. 1 jeff jeff 77426528 Jan 16 18:50 dmel-all-r6.19.gtf
+-rw-r--r--. 1 jeff jeff   721242 Jan 25  2016 dmel_unique_protein_isoforms_fb_2016_01.tsv
+drwxrwxr-x. 2 jeff jeff     4096 Jan 16 19:16 fastq
+-rw-r--r--. 1 jeff jeff  1830516 Jan 25  2016 gene_association.fb.gz
+-rw-rw-r--. 1 jeff jeff       15 Jan 16 19:17 test.txt
+-rw-rw-r--. 1 jeff jeff      245 Jan 16 19:24 word_counts.txt
+</code></pre></div></div>
+
+<p>That’s a huge amount of output. Let’s see if we can understand what it is, working left to right.</p>
+
+<ul>
+  <li><strong>1st column - Permissions:</strong> On the very left side, there is a string of the characters <code class="highlighter-rouge">d</code>, <code class="highlighter-rouge">r</code>, <code class="highlighter-rouge">w</code>, <code class="highlighter-rouge">x</code>, and <code class="highlighter-rouge">-</code>. The <code class="highlighter-rouge">d</code> simply indicates if something is a directory (there is a <code class="highlighter-rouge">-</code> in that spot if it is not a directory). The other <code class="highlighter-rouge">r</code>, <code class="highlighter-rouge">w</code>, <code class="highlighter-rouge">x</code> bits indicates permission to <strong>R</strong>ead <strong>W</strong>rite and e<strong>X</strong>ecute a file. There are three columns of <code class="highlighter-rouge">rwx</code> permissions following the spot for <code class="highlighter-rouge">d</code>. If a user is missing a permission to do something, it’s indicated by a <code class="highlighter-rouge">-</code>.
+    <ul>
+      <li>The first column of <code class="highlighter-rouge">rwx</code> are the permissions that the owner has (in this case the owner is <code class="highlighter-rouge">jeff</code>).</li>
+      <li>The second set of <code class="highlighter-rouge">rwx</code>s are permissions that other members of the owner’s group share (in this case, the group is also named <code class="highlighter-rouge">jeff</code>).</li>
+      <li>The third set of <code class="highlighter-rouge">rwx</code>s are permissions that anyone else with access to this computer can do with a file. Though files are typically created with read permissions for everyone, typically the permissions on your home directory prevent others from being able to access the file in the first place.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>2nd column - Owner:</strong> This is the username of the user who owns the file. Their permissions are indicated in the first permissions column.</p>
+  </li>
+  <li>
+    <p><strong>3rd column - Group:</strong> This is the user group of the user who owns the file. Members of this user group have permissions indicated in the second permissions column.</p>
+  </li>
+  <li>
+    <p><strong>4th column - Size of file:</strong> This is the size of a file in bytes, or the number of files/subdirectories if we are looking at a directory. (We can use the <code class="highlighter-rouge">-h</code> option here to get a human-readable filesize in megabytes, gigabytes, etc.)</p>
+  </li>
+  <li>
+    <p><strong>5th column - Time last modified:</strong> This is the last time the file was modified.</p>
+  </li>
+  <li><strong>6th column - Filename:</strong> This is the filename.</li>
+</ul>
+
+<p>So how do we change permissions? 
+As I mentioned earlier, we need permission to execute our script.
+Changing permissions is done with <code class="highlighter-rouge">chmod</code>. 
+To add executable permissions for all users we could use this:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x demo.sh
+$ ls -l
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-rw-rw-r--. 1 jeff jeff 12534006 Jan 16 18:50 bash-lesson.tar.gz
+-rwxrwxr-x. 1 jeff jeff       40 Jan 16 19:41 demo.sh
+-rw-rw-r--. 1 jeff jeff 77426528 Jan 16 18:50 dmel-all-r6.19.gtf
+-rw-r--r--. 1 jeff jeff   721242 Jan 25  2016 dmel_unique_protein_isoforms_fb_2016_01.tsv
+drwxrwxr-x. 2 jeff jeff     4096 Jan 16 19:16 fastq
+-rw-r--r--. 1 jeff jeff  1830516 Jan 25  2016 gene_association.fb.gz
+-rw-rw-r--. 1 jeff jeff       15 Jan 16 19:17 test.txt
+-rw-rw-r--. 1 jeff jeff      245 Jan 16 19:24 word_counts.txt
+</code></pre></div></div>
+
+<p>Now that we have executable permissions for that file, we can run it.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./demo.sh
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Our script worked!
+</code></pre></div></div>
+
+<p>Fantastic, we’ve written our first program! Before we go any further, let’s learn how to take notes inside our program using comments. A comment is indicated by the <code class="highlighter-rouge">#</code> character, followed by whatever we want. Comments do not get run. Let’s try out some comments in the console, then add one to our script!</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># This wont show anything
+</code></pre></div></div>
+
+<p>Now lets try adding this to our script with <code class="highlighter-rouge">nano</code>. Edit your script to look something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># This is a comment... they are nice for making notes!</span>
+<span class="nb">echo</span> <span class="s2">"Our script worked!"</span>
+</code></pre></div></div>
+
+<p>When we run our script, the output should be unchanged from before!</p>
+
+<h2 id="shell-variables">Shell variables</h2>
+
+<p>One important concept that we’ll need to cover are shell variables. Variables are a great way of saving information under a name you can access later. In programming languages like Python and R, variables can store pretty much anything you can think of. In the shell, they usually just store text. The best way to understand how they work is to see them in action.</p>
+
+<p>To set a variable, simply type in a name containing only letters, numbers, and underscores, followed by an <code class="highlighter-rouge">=</code> and whatever you want to put in the variable. Shell variable names are typically uppercase by convention.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ VAR="This is our variable"
+</code></pre></div></div>
+
+<p>To use a variable, prefix its name with a <code class="highlighter-rouge">$</code> sign. Note that if we want to simply check what a variable is, we should use echo (or else the shell will try to run the contents of a variable).</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ echo $VAR
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is our variable
+</code></pre></div></div>
+
+<p>Let’s try setting a variable in our script and then recalling its value as part of a command. We’re going to make it so our script runs <code class="highlighter-rouge">wc -l</code> on whichever file we specify with <code class="highlighter-rouge">FILE</code>.</p>
+
+<p>Our script:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># set our variable to the name of our GTF file</span>
+<span class="nv">FILE</span><span class="o">=</span>dmel-all-r6.19.gtf
+
+<span class="c"># call wc -l on our file</span>
+<span class="nb">wc</span> <span class="nt">-l</span> <span class="nv">$FILE</span>
+</code></pre></div></div>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./demo.sh
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>542048 dmel-all-r6.19.gtf
+</code></pre></div></div>
+
+<p>What if we wanted to do our little <code class="highlighter-rouge">wc -l</code> script on other files without having to change <code class="highlighter-rouge">$FILE</code> every time we want to use it? There is actually a special shell variable we can use in scripts that allows us to use arguments in our scripts (arguments are extra information that we can pass to our script, like the <code class="highlighter-rouge">-l</code> in <code class="highlighter-rouge">wc -l</code>).</p>
+
+<p>To use the first argument to a script, simply use <code class="highlighter-rouge">$1</code> (the second argument is <code class="highlighter-rouge">$2</code>, and so on). Let’s change our script to run <code class="highlighter-rouge">wc -l</code> on <code class="highlighter-rouge">$1</code> instead of <code class="highlighter-rouge">$FILE</code>. Note that we can also pass all of the arguments using <code class="highlighter-rouge">$@</code> (not going to use it in this lesson, but it’s something to be aware of).</p>
+
+<p>Our script:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># call wc -l on our first argument</span>
+<span class="nb">wc</span> <span class="nt">-l</span> <span class="nv">$1</span>
+</code></pre></div></div>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./demo.sh dmel_unique_protein_isoforms_fb_2016_01.tsv
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>22129 dmel_unique_protein_isoforms_fb_2016_01.tsv
+</code></pre></div></div>
+
+<p>Nice! One thing to be aware of when using variables: they are all treated as pure text. How do we save the output of an actual command like <code class="highlighter-rouge">ls -l</code>?</p>
+
+<p>A demonstration of what doesn’t work:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ TEST=ls -l
+</code></pre></div></div>
+<div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-bash: -l: command not found
+</code></pre></div></div>
+
+<p>What does work (we need to surround any command with <code class="highlighter-rouge">$(command)</code>):</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ TEST=$(ls -l)
+$ echo $TEST
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total 90372 -rw-rw-r--. 1 jeff jeff 12534006 Jan 16 18:50 bash-lesson.tar.gz -rwxrwxr-x. 1 jeff jeff 40 Jan 1619:41 demo.sh -rw-rw-r--. 1 jeff jeff 77426528 Jan 16 18:50 dmel-all-r6.19.gtf -rw-r--r--. 1 jeff jeff 721242 Jan 25 2016 dmel_unique_protein_isoforms_fb_2016_01.tsv drwxrwxr-x. 2 jeff jeff 4096 Jan 16 19:16 fastq -rw-r--r--. 1 jeff jeff 1830516 Jan 25 2016 gene_association.fb.gz -rw-rw-r--. 1 jeff jeff 15 Jan 16 19:17 test.txt -rw-rw-r--. 1 jeff jeff 245 Jan 16 19:24 word_counts.txt
+</code></pre></div></div>
+
+<p>Note that everything got printed on the same line. This is a feature, not a bug, as it allows us to use <code class="highlighter-rouge">$(commands)</code> inside lines of script without triggering line breaks (which would end our line of code and execute it prematurely).</p>
+
+<h2 id="loops">Loops</h2>
+
+<p>To end our lesson on scripts, we are going to learn how to write a for-loop
+to execute a lot of commands at once. This will let us do the same string of
+commands on every file in a directory (or other stuff of that nature).</p>
+
+<p>for-loops generally have the following syntax:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">for </span>VAR <span class="k">in </span>first second third
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$VAR</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>When a for-loop gets run, the loop will run once for everything following the
+word <code class="highlighter-rouge">in</code>. In each iteration, the variable <code class="highlighter-rouge">$VAR</code> is set to a particular
+value for that iteration. In this case it will be set to <code class="highlighter-rouge">first</code> during the
+first iteration, <code class="highlighter-rouge">second</code> on the second, and so on. During each iteration,
+the code between <code class="highlighter-rouge">do</code> and <code class="highlighter-rouge">done</code> is performed.</p>
+
+<p>Let’s run the script we just wrote (I saved mine as <code class="highlighter-rouge">loop.sh</code>).</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x loop.sh
+$ ./loop.sh
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>first
+second
+third
+</code></pre></div></div>
+
+<p>What if we wanted to loop over a shell variable, such as every file in the
+current directory? Shell variables work perfectly in for-loops. 
+In this example, we’ll save the result of <code class="highlighter-rouge">ls</code> and loop over each file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nv">FILES</span><span class="o">=</span><span class="k">$(</span><span class="nb">ls</span><span class="k">)</span>
+<span class="k">for </span>VAR <span class="k">in</span> <span class="nv">$FILES</span>
+<span class="k">do
+        </span><span class="nb">echo</span> <span class="nv">$VAR</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./loop.sh
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash-lesson.tar.gz
+demo.sh
+dmel_unique_protein_isoforms_fb_2016_01.tsv
+dmel-all-r6.19.gtf
+fastq
+gene_association.fb.gz
+loop.sh
+test.txt
+word_counts.txt
+</code></pre></div></div>
+
+<p>There’s actually even a shortcut to run on all files of a particular type, say all .tsv files:</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">for </span>VAR <span class="k">in</span> <span class="k">*</span>.gz
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$VAR</span>
+<span class="k">done</span>
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash-lesson.tar.gz
+gene_association.fb.gz
+</code></pre></div></div>
+
+<blockquote class="challenge">
+  <h2 id="writing-our-own-scripts-and-loops">Writing our own scripts and loops</h2>
+  <p><code class="highlighter-rouge">cd</code> to our <code class="highlighter-rouge">fastq</code> directory from earlier and write a loop to print off the name and top 4 lines of every fastq file in that directory.</p>
+
+  <p>Is there a way to only run the loop on fastq files ending in <code class="highlighter-rouge">_1.fastq</code>?</p>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="concatenating-variables">Concatenating variables</h2>
+  <p>Concatenating (i.e. mashing together) variables is quite easy to do. 
+Add whatever you want to concatenate to the beginning or end of the shell variable 
+after enclosing it in <code class="highlighter-rouge">{}</code> characters.</p>
+
+  <div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FILE=stuff.txt
+echo ${FILE}.example
+</code></pre></div>  </div>
+  <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stuff.txt.example
+</code></pre></div>  </div>
+
+  <p>Can you write a script that prints off the name of every file in a directory with “.processed” added to it?</p>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="special-permissions">Special permissions</h2>
+  <p>What if we want to give different sets of users different permissions. <code class="highlighter-rouge">chmod</code> actually accepts special numeric codes instead of stuff like <code class="highlighter-rouge">chmod +x</code>. The numeric codes are as follows: read = 4, write = 2, execute = 1. For each user we will assign permissions based on the sum of these permissions (must be between 7 and 0).</p>
+
+  <p>Let’s make an example file and give everyone permission to do everything with it.</p>
+  <div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch example
+ls -l example
+chmod 777 example
+ls -l example
+</code></pre></div>  </div>
+
+  <p>How might we give ourselves permission to do everything with a file, but allow no one else to do anything with it.</p>
+</blockquote>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>A shell script is just a list of bash commands in a text file.</p>
+</li>
+    
+    <li><p><code class="highlighter-rouge">chmod +x script.sh</code> will give it permission to execute.</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../04-wildcards-pipes/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../11-cluster/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/05-scripts.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

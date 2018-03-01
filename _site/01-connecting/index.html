@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Connecting to the cluster</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/01-connecting.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../00-hpc-intro/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Connecting to the cluster</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../02-navigation/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 15 min
+      <br/>
+      <strong>Exercises:</strong> 5 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I open a terminal?</p>
+</li>
+	
+	<li><p>How do I connect to a remote computer?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Connect to a cluster.</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<h2 id="opening-a-terminal">Opening a Terminal</h2>
+
+<p>Connecting to an HPC system is most often done through a tool known as “SSH”
+(Secure SHell) and usually SSH is run through a terminal. So, to begin using
+an HPC system we need to begin by opening a terminal. Different operating
+systems have different terminals, none of which are exactly the same in terms
+of their features and abilities while working on the operating system. When
+connected to the remote system the experience between terminals will be
+identical as each will faithfully present the same experience of using that
+system.</p>
+
+<p>Here is the process for opening a terminal in each operating system.</p>
+
+<h3 id="linux">Linux</h3>
+<p>There are many different versions (aka “flavours”) of Linux and how to open a
+terminal window can change between flavours. Fortunately most Linux users
+already know how to open a terminal window since it is a common part of the
+workflow for Linux users. If this is something that you do not know how to do
+then a quick search on the Internet for “how to open a terminal window in”
+with your particular Linux flavour appended to the end should quickly give
+you the directions you need.</p>
+
+<p>A very popular version of Linux is Ubuntu. There are many ways to open a
+terminal window in Ubuntu but a very fast way is to use the terminal shortcut
+key sequence: Ctrl+Alt+T.</p>
+
+<h3 id="mac">Mac</h3>
+
+<p>Macs have had a terminal built in since the first version of OSX since it is
+built on a Linux flavour known as BSD (Berkeley Systems Designs). 
+The terminal can be quickly opened through the use of the Searchlight tool. 
+Hold down the command key and press the spacebar. 
+In the search bar that shows up type “terminal”, choose the terminal app from the list of results (it will
+look like a tiny, black computer screen) and you will be presented with a terminal window.
+Alternatively, you can find Terminal under “Utilities” in the Applications menu.</p>
+
+<h3 id="windows">Windows</h3>
+
+<p>While Windows does have a command-line interface known as the “Command
+Prompt” that has its roots in MS-DOS (Microsoft Disk Operating System) it
+does not have an SSH tool built into it and so one needs to be installed.
+There are a variety of programs that can be used for this, two common ones we
+describe here, as follows:</p>
+
+<h4 id="mobaxterm">MobaXterm</h4>
+
+<p>MobaXterm is a terminal window emulator for Windows and the home edition can
+be downloaded for free from
+<a href="https://mobaxterm.mobatek.net/download-home-edition.html">mobatek.net</a>. If
+you follow the link you will note that there are two editions of the home
+version available: Portable and Installer. The portable edition puts all
+MobaXterm content in a folder on the desktop (or anywhere else you would like
+it) so that it is easy add plug-ins or remove the software. The installer
+edition adds MobaXterm to your Windows installation as any other program you
+might install. If you are not sure that you will continue to use MobaXterm in
+the future you are likely best to choose the portable edition.</p>
+
+<p>Download the version that you would like to use and install it as you would
+any other software on your Windows installation. Once the software is
+installed you can run it by either opening the folder installed with the
+portable edition and double-clicking on the file named
+<em>MobaXterm_Personal_10.2</em> or, if the installer edition was used, finding the
+executable through either the start menu or the Windows search option.</p>
+
+<p>Once the MobaXterm window is open you should see a large button in the middle
+of that window with the text “Start Local Terminal”. Click this button and
+you will have a terminal window at your disposal.</p>
+
+<h4 id="putty">PuTTY</h4>
+
+<p>It is strictly speaking not necessary to have a terminal running on your local computer in order to access and use a remote system, only a window into the remote system once connected.  PuTTy is likely the oldest, most well-known, and widely used software solution to take this approach.</p>
+
+<p>PuTTY is available for free download from <a href="http://www.putty.org/">www.putty.org</a>.  Download the version that is correct for your operating system and install it as you would other software on you Windows system.  Once installed it will be available through the start menu or similar.</p>
+
+<p>Running PuTTY will not initially produce a terminal but intsead a window full of connection options.  Putting the address of the remote system in the “Host Name (or IP Address)” box and either pressing enter or clicking the “Open” button should begin the connection process.</p>
+
+<p>If this works you will see a terminal window open that prompts you for a username through the “login as:” prompt and then for a password.  If both of these are passed correctly then you will be given access to the system and will see a message saying so within the terminal.  If you need to escape the authentication process you can hold the control/ctrl key and press the c key to exit and start again.</p>
+
+<p>Note that you may want to paste in your password rather than typing it.  Use control/ctrl plus a right-click of the mouse to paste content from the clipboard to the PuTTY terminal.</p>
+
+<p>For those logging in with PuTTY it would likely be best to cover the terminal basics already mentioned above before moving on to navigating the remote system.</p>
+
+<h2 id="logging-onto-the-system">Logging onto the system</h2>
+
+<p>With all of this in mind, let’s connect to a cluster. 
+For these examples, we will connect to Graham - a high-performance cluster located at the University of Waterloo.
+Although it’s unlikely that every system will be exactly like Graham, 
+it’s a very good example of what you can expect from a supercomputing installation.
+To connect to our example computer, we will use SSH (if you are using PuTTY, see above).</p>
+
+<p>SSH allows us to connect to UNIX computers remotely, and use them as if they were our own.
+The general syntax of the connection command follows the format <code class="highlighter-rouge">ssh yourUsername@some.computer.address</code>
+Let’s attempt to connect to the cluster now:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh yourUsername@graham.computecanada.ca
+</code></pre></div></div>
+
+<pre><code class="language-{.output}">The authenticity of host 'graham.computecanada.ca (199.241.166.2)' can't be established.
+ECDSA key fingerprint is SHA256:JRj286Pkqh6aeO5zx1QUkS8un5fpcapmezusceSGhok.
+ECDSA key fingerprint is MD5:99:59:db:b1:3f:18:d0:2c:49:4e:c2:74:86:ac:f7:c6.
+Are you sure you want to continue connecting (yes/no)?  # type "yes"!
+Warning: Permanently added the ECDSA host key for IP address '199.241.166.2' to the list of known hosts.
+yourUsername@graham.computecanada.ca's password:  # no text appears as you enter your password
+Last login: Wed Jun 28 16:16:20 2017 from s2.n59.queensu.ca
+
+Welcome to the ComputeCanada/SHARCNET cluster Graham.
+</code></pre>
+
+<p>If you’ve connected successfully, you should see a prompt like the one below. 
+This prompt is informative, and lets you grasp certain information at a glance:
+in this case <code class="highlighter-rouge">[yourUsername@computerName workingDirectory]$</code>.
+(If you don’t understand what these things are, don’t worry! 
+We will cover things in depth as we explore the system further.)</p>
+
+<pre><code class="language-{.output}">[yourUsername@gra-login1 ~]$
+</code></pre>
+
+<h2 id="telling-the-difference-between-the-local-terminal-and-the-remote-terminal">Telling the Difference between the Local Terminal and the Remote Terminal</h2>
+
+<p>You may have noticed that the prompt changed when you logged into the remote
+system using the terminal (if you logged in using PuTTY this will not apply
+because it does not offer a local terminal). This change is important because
+it makes it clear on which system the commands you type will be run when you
+pass them into the terminal. This change is also a small complication that we
+will need to navigate throughout the workshop. Exactly what is reported
+before the <code class="highlighter-rouge">$</code> in the terminal when it is connected to the local system and
+the remote system will typically be different for every user. We still need
+to indicate which system we are entering commands on though so we will adopt
+the following convention:</p>
+
+<p><code class="highlighter-rouge">[local]$</code> when the command is to be entered on a terminal connected to your local computer</p>
+
+<p><code class="highlighter-rouge">[remote]$</code> when the command is to be entered on a terminal connected to the remote system</p>
+
+<p><code class="highlighter-rouge">$</code> when it really doesn’t matter which system the terminal is connected to.</p>
+
+<blockquote class="callout">
+  <h2 id="being-certain-which-system-your-terminal-is-connected-to">Being Certain Which System your Terminal is connected to</h2>
+  <p>If you ever need to be certain which system a terminal you are using is connected to 
+then use the follwing command: <code class="highlighter-rouge">$ hostname</code>.</p>
+</blockquote>
+
+<blockquote class="callout">
+  <h2 id="keep-two-terminal-windows-open">Keep Two Terminal Windows Open</h2>
+  <p>It is strongly recommended that you have two terminals open, one connected
+to the local system and one connected to the remote system, that you can
+switch back and forth between. If you only use one terminal window then you
+will need to reconnect to the remote system using one of the methods above
+when you see a change from <code class="highlighter-rouge">[local]$</code> to <code class="highlighter-rouge">[remote]$</code> and disconnect when you
+see the reverse.</p>
+</blockquote>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>To connect to a cluster using SSH: <code class="highlighter-rouge">ssh yourUsername@remote.computer.address</code></p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../00-hpc-intro/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../02-navigation/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/01-connecting.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

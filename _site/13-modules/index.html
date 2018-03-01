@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Accessing software</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/13-modules.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../12-scheduler/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Accessing software</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../14-transferring-files/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 30 min
+      <br/>
+      <strong>Exercises:</strong> 15 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do we load and unload software packages?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Understand how to load and use a software package.</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<p>On a high-performance computing system, no software is loaded by default.
+If we want to use a software package, we will need to “load” it ourselves.</p>
+
+<p>Before we start using individual software packages, however, 
+we should understand the reasoning behind this approach.
+The two biggest factors are software incompatibilities and versioning.</p>
+
+<p>Software incompatibility is a major headache for programmers.
+Sometimes the presence (or absence) 
+of a software package will break others that depend on it.
+Two of the most famous examples are Python 2 and 3 and C compiler versions.
+Python 3 famously provides a <code class="highlighter-rouge">python</code> command 
+that conflicts with that provided by Python 2. 
+Software compiled against a newer version of the C libraries 
+and then used when they are not present will result in a nasty
+<code class="highlighter-rouge">'GLIBCXX_3.4.20' not found</code> error, for instance.</p>
+
+<p>Software versioning is another common issue.
+A team might depend on a certain package version for their research project - 
+if the software version was to change (for instance, if a package was updated),
+it might affect their results.
+Having access to multiple software versions allow a set of researchers to prevent
+software versioning issues from affecting their results.</p>
+
+<h2 id="environment-modules-lmod">Environment modules (Lmod)</h2>
+
+<p>Environment modules are the solution to these problems.
+A module is a self-contained software package - 
+it contains all of the files required to run a software packace 
+and loads required dependencies.</p>
+
+<p>To see available software modules, use <code class="highlighter-rouge">module avail</code></p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module avail
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----------------------------- MPI-dependent avx2 modules -------------------------------
+   abinit/8.2.2     (chem)      lammps/20170331                    plumed/2.3.0        (chem)
+   abyss/1.9.0      (bio)       mrbayes/3.2.6            (bio)     pnetcdf/1.8.1       (io)
+   boost-mpi/1.60.0 (t)         ncl/6.4.0                          quantumespresso/6.0 (chem)
+   cdo/1.7.2        (geo)       ncview/2.1.7             (vis)     ray/2.3.1           (bio)
+
+
+[removed most of the output here for clarity]
+
+   t:        Tools for development / Outils de développement
+   vis:      Visualisation software / Logiciels de visualisation
+   chem:     Chemistry libraries/apps / Logiciels de chimie
+   geo:      Geography libraries/apps / Logiciels de géographie
+   phys:     Physics libraries/apps / Logiciels de physique
+   Aliases:  Aliases exist: foo/1.2.3 (1.2) means that "module load foo/1.2" will load foo/1.2.3
+   D:        Default Module
+
+Use "module spider" to find all possible modules.
+Use "module keyword key1 key2 ..." to search for all possible modules matching any of the "keys".
+</code></pre></div></div>
+
+<h2 id="loading-and-unloading-software">Loading and unloading software</h2>
+
+<p>To load a software module, use <code class="highlighter-rouge">module load</code>.
+In this example we will use Python 3.</p>
+
+<p>Intially, Python 3 is not loaded. 
+We can test this by using the <code class="highlighter-rouge">which</code> command.
+<code class="highlighter-rouge">which</code> looks for programs the same way that Bash does,
+so we can use it to tell us where a particular piece of software is stored.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ which python3
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/which: no python3 in (/opt/software/slurm/16.05.9/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/avx2/Compiler/intel2016.4/openmpi/2.1.1/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/imkl/11.3.4.258/mkl/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/imkl/11.3.4.258/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/ifort/2016.4.258/compilers_and_libraries_2016.4.258/linux/bin/intel64:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/gcc-5.4.0/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/icc/2016.4.258/compilers_and_libraries_2016.4.258/linux/bin/intel64:/opt/software/bin:/opt/puppetlabs/puppet/bin:/opt/software/slurm/current/bin:/opt/software/slurm/bin:/cvmfs/soft.computecanada.ca/easybuild/bin:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/bin:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/sbin:/cvmfs/soft.computecanada.ca/custom/bin:/opt/software/slurm/current/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/yourUsername/.local/bin:/home/yourUsername/bin)
+</code></pre></div></div>
+
+<p>We can load the <code class="highlighter-rouge">python3</code> command with <code class="highlighter-rouge">module load</code>:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module load python
+[remote[$ which python3
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/python-3.5.2/bin/python3
+</code></pre></div></div>
+
+<p>So what just happened?</p>
+
+<p>To understand the output, first we need to understand the nature of the 
+<code class="highlighter-rouge">$PATH</code> environment variable.
+<code class="highlighter-rouge">$PATH</code> is a special ennvironment variable that controls where a UNIX system looks for software.
+Specifically <code class="highlighter-rouge">$PATH</code> is a list of directories (separated by <code class="highlighter-rouge">:</code>)
+that the OS searches through for a command before giving up and telling us it can’t find it.
+As with all environment variables we can print it out using <code class="highlighter-rouge">echo</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ echo $PATH
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/python-3.5.2/bin:/opt/software/slurm/16.05.9/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/avx2/Compiler/intel2016.4/openmpi/2.1.1/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/imkl/11.3.4.258/mkl/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/imkl/11.3.4.258/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/ifort/2016.4.258/compilers_and_libraries_2016.4.258/linux/bin/intel64:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/gcc-5.4.0/bin:/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/icc/2016.4.258/compilers_and_libraries_2016.4.258/linux/bin/intel64:/opt/software/bin:/opt/puppetlabs/puppet/bin:/opt/software/slurm/current/bin:/opt/software/slurm/bin:/cvmfs/soft.computecanada.ca/easybuild/bin:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/bin:/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/sbin:/cvmfs/soft.computecanada.ca/custom/bin:/opt/software/slurm/current/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/yourUsername/.local/bin:/home/yourUsername/bin
+</code></pre></div></div>
+
+<p>You’ll notice a similarity to the output of the <code class="highlighter-rouge">which</code> command. 
+In this case, there’s only one difference:
+the <code class="highlighter-rouge">/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/python-3.5.2/bin</code> directory at the beginning.
+When we ran <code class="highlighter-rouge">module load python/3.5.2</code>, 
+it added this directory to the beginning of our <code class="highlighter-rouge">$PATH</code>.
+Let’s examine what’s there:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ ls /cvmfs/soft.computecanada.ca/nix/var/nix/profiles/python-3.5.2/bin
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2to3		  idle3    pip3.5    python3	       python3.5m-config  virtualenv
+2to3-3.5	  idle3.5  pydoc3    python3.5	       python3-config	  wheel
+easy_install	  pip	   pydoc3.5  python3.5-config  pyvenv
+easy_install-3.5  pip3	   python    python3.5m        pyvenv-3.5
+</code></pre></div></div>
+
+<p>Taking this to it’s conclusion, <code class="highlighter-rouge">module load</code> will add software to your <code class="highlighter-rouge">$PATH</code>.
+It “loads” software.
+A special note on this - 
+depending on which version of the <code class="highlighter-rouge">module</code> program that is installed at your site,
+<code class="highlighter-rouge">module load</code> will also load required software dependencies.
+To demonstrate, let’s use <code class="highlighter-rouge">module list</code>.
+<code class="highlighter-rouge">module list</code> shows all loaded software modules.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module list
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Currently Loaded Modules:
+  1) nixpkgs/.16.09  (H,S)   3) gcccore/.5.4.0    (H)   5) intel/2016.4  (t)   7) StdEnv/2016.4 (S)
+  2) icc/.2016.4.258 (H)     4) ifort/.2016.4.258 (H)   6) openmpi/2.1.1 (m)   8) python/3.5.2  (t)
+
+  Where:
+   S:  Module is Sticky, requires --force to unload or purge
+   m:  MPI implementations / Implémentations MPI
+   t:  Tools for development / Outils de développement
+   H:             Hidden Module
+</code></pre></div></div>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module load beast
+[remote]$ module list
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Currently Loaded Modules:
+  1) nixpkgs/.16.09    (H,S)   5) intel/2016.4  (t)   9) java/1.8.0_121   (t)
+  2) icc/.2016.4.258   (H)     6) openmpi/2.1.1 (m)  10) beagle-lib/2.1.2 (bio)
+  3) gcccore/.5.4.0    (H)     7) StdEnv/2016.4 (S)  11) beast/2.4.0      (chem)
+  4) ifort/.2016.4.258 (H)     8) python/3.5.2  (t)
+
+  Where:
+   S:     Module is Sticky, requires --force to unload or purge
+   bio:   Bioinformatic libraries/apps / Logiciels de bioinformatique
+   m:     MPI implementations / Implémentations MPI
+   t:     Tools for development / Outils de développement
+   chem:  Chemistry libraries/apps / Logiciels de chimie
+   H:                Hidden Module
+</code></pre></div></div>
+
+<p>So in this case, loading the <code class="highlighter-rouge">beast</code> module (a bioinformatics software package),
+also loaded <code class="highlighter-rouge">java/1.8.0_121</code> and <code class="highlighter-rouge">beagle-lib/2.1.2</code> as well.
+Let’s try unloading the <code class="highlighter-rouge">beast</code> package.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module unload beast
+[remote]$ module list
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Currently Loaded Modules:
+  1) nixpkgs/.16.09  (H,S)   3) gcccore/.5.4.0    (H)   5) intel/2016.4  (t)   7) StdEnv/2016.4 (S)
+  2) icc/.2016.4.258 (H)     4) ifort/.2016.4.258 (H)   6) openmpi/2.1.1 (m)   8) python/3.5.2  (t)
+
+  Where:
+   S:  Module is Sticky, requires --force to unload or purge
+   m:  MPI implementations / Implémentations MPI
+   t:  Tools for development / Outils de développement
+   H:             Hidden Module
+</code></pre></div></div>
+
+<p>So using <code class="highlighter-rouge">module unload</code> “un-loads” a module along with it’s dependencies.
+If we wanted to unload everything at once, we could run <code class="highlighter-rouge">module purge</code> (unloads everything).</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module purge
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) StdEnv/2016.4    3) icc/.2016.4.258   5) ifort/.2016.4.258   7) imkl/11.3.4.258
+  2) nixpkgs/.16.09   4) gcccore/.5.4.0    6) intel/2016.4        8) openmpi/2.1.1
+</code></pre></div></div>
+
+<p>Note that <code class="highlighter-rouge">module purge</code> is informative. 
+It lets us know that all but a default set of packages have been unloaded
+(and how to actually unload these if we truly so desired).</p>
+
+<h2 id="software-versioning">Software versioning</h2>
+
+<p>So far, we’ve learned how to load and unload software packages.
+This is very useful.
+However, we have not yet addressed the issue of software versioning.
+At some point or other, 
+you will run into issues where only one particular version of some software will be suitable.
+Perhaps a key bugfix only happened in a certain version, 
+or version X broke compatibility with a file format you use.
+In either of these example cases, 
+it helps to be very specific about what software is loaded.</p>
+
+<p>Let’s examine the output of <code class="highlighter-rouge">module avail</code> more closely.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module avail
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----------------------------------------------------------- Core Modules -----------------------------------------------------------
+   StdEnv/2016.4 (S,L)     imkl/11.3.4.258 (L,math,D:11)      mcr/R2014b         (t)          python/3.5.2     (t,D:3:3.5)
+   bioperl/1.7.1 (bio)     imkl/2017.1.132 (math,2017)        mcr/R2015a         (t)          qt/4.8.7         (t)
+   eclipse/4.6.0 (t)       impute2/2.3.2   (bio)              mcr/R2015b         (t)          qt/5.6.1         (t,D)
+   eigen/3.3.2   (math)    intel/2016.4    (L,t,D:16:2016)    mcr/R2016a         (t)          signalp/4.1f     (bio)
+   fastqc/0.11.5 (bio)     intel/2017.1    (t,17:2017)        mcr/R2016b         (t,D)        spark/2.1.0      (t)
+   g2clib/1.6.0            jasper/1.900.1  (vis)              minimac2/2014.9.15 (bio)        spark/2.1.1      (t,D)
+   g2lib/1.4.0             java/1.8.0_121  (L,t)              perl/5.22.2        (t)          tbb/2017.2.132   (t)
+   gatk/3.7      (bio)     mach/1.0.18     (bio)              pgi/17.3           (t)          tmhmm/2.0c       (bio)
+   gcc/4.8.5     (t)       mcr/R2013a      (t)                picard/2.1.1       (bio)        trimmomatic/0.36 (bio)
+   gcc/5.4.0     (t,D)     mcr/R2014a      (t)                python/2.7.13      (t,2:2.7)
+</code></pre></div></div>
+
+<p>Let’s take a closer look at the <code class="highlighter-rouge">gcc</code> module.
+GCC is an extremely widely used C/C++/Fortran compiler.
+Tons of software is dependent on the GCC version, 
+and might not compile or run if the wrong version is loaded.
+In this case, there are two different versions: <code class="highlighter-rouge">gcc/4.8.5</code> and <code class="highlighter-rouge">gcc/5.4.0</code>.
+How do we load each copy and which copy is the default?</p>
+
+<p>In this case, <code class="highlighter-rouge">gcc/5.4.0</code> has a <code class="highlighter-rouge">(D)</code> next to it.
+This indicates that it is the default - 
+if we type <code class="highlighter-rouge">module load gcc</code>, this is the copy that will be loaded.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module load gcc
+[remote]$ gcc --version
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Lmod is automatically replacing "intel/2016.4" with "gcc/5.4.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) openmpi/2.1.1
+
+gcc (GCC) 5.4.0
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+
+<p>Note that three things happened:
+the default copy of GCC was loaded (version 5.4.0), 
+the Intel compilers (which conflict with GCC) were unloaded,
+and software that is dependent on compiler (OpenMPI) was reloaded.
+The <code class="highlighter-rouge">module</code> system turned what might be a super-complex operation into a single command.</p>
+
+<p>So how do we load the non-default copy of a software package?
+In this case, the only change we need to make is be more specific about the module we are loading.
+There are two GCC modules: <code class="highlighter-rouge">gcc/5.4.0</code> and <code class="highlighter-rouge">gcc/4.8.5</code>.
+To load a non-default module, the only change we need to make to our <code class="highlighter-rouge">module load</code> command
+is to leave in the version number after the <code class="highlighter-rouge">/</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module load gcc/4.8.5
+[remote]$ gcc --version
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Inactive Modules:
+  1) openmpi
+
+The following have been reloaded with a version change:
+  1) gcc/5.4.0 =&gt; gcc/4.8.5
+
+gcc (GCC) 4.8.5
+Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+
+<p>We now have successfully switched from GCC 5.4.0 to GCC 4.8.5.
+It is also important to note that there was no compatible OpenMPI module available for GCC 4.8.5.
+Because of this, the <code class="highlighter-rouge">module</code> program has “inactivated” the module.
+All this means for us is that if we re-load GCC 5.4.0, 
+<code class="highlighter-rouge">module</code> will remember OpenMPI used to be loaded and load that module as well.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ module load gcc/5.4.0
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Activating Modules:
+  1) openmpi/2.1.1
+
+The following have been reloaded with a version change:
+  1) gcc/4.8.5 =&gt; gcc/5.4.0
+</code></pre></div></div>
+
+<blockquote class="challenge">
+  <h2 id="using-software-modules-in-scripts">Using software modules in scripts</h2>
+
+  <p>Create a job that is able to run <code class="highlighter-rouge">python3 --version</code>.
+Remember, no software is loaded by default!
+Running a job is just like logging on to the system 
+(you should not assume a module loaded on the login node is loaded on a worker node).</p>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="loading-a-module-by-default">Loading a module by default</h2>
+
+  <p>Adding a set of <code class="highlighter-rouge">module load</code> commands to all of your scripts and
+having to manually load modules every time you log on can be tiresome.
+Fortunately, there is a way of specifying a set of “default modules”
+that always get loaded, regardless of whether or not you’re logged on or running a job.</p>
+
+  <p>Every user has two hidden files in their home directory: <code class="highlighter-rouge">.bashrc</code> and <code class="highlighter-rouge">.bash_profile</code>
+(you can see these files with <code class="highlighter-rouge">ls -la ~</code>).
+These scripts are run every time you log on or run a job.
+Adding a <code class="highlighter-rouge">module load</code> command to one of these shell scripts means that
+that module will always be loaded.
+Modify either your <code class="highlighter-rouge">.bashrc</code> or <code class="highlighter-rouge">.bash_profile</code> scripts to load a commonly used module like Python.
+Does your <code class="highlighter-rouge">python3 --version</code> job from before still need <code class="highlighter-rouge">module load</code> to run?</p>
+</blockquote>
+
+<h2 id="installing-software-of-our-own">Installing software of our own</h2>
+
+<p>Most HPC clusters have a pretty large set of preinstalled software.
+Nonetheless, it’s unlikely that all of the software we’ll need will be available.
+Sooner or later, we’ll need to install some software of our own.</p>
+
+<p>Though software installation differs from package to package,
+the general process is the same:
+download the software, read the installation instructions (important!),
+install dependencies, compile, then start using our software.</p>
+
+<p>As an example we will install the bioinformatics toolkit <code class="highlighter-rouge">seqtk</code>.
+We’ll first need to obtain the source code from Github using <code class="highlighter-rouge">git</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ git clone https://github.com/lh3/seqtk.git
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cloning into 'seqtk'...
+remote: Counting objects: 316, done.
+remote: Total 316 (delta 0), reused 0 (delta 0), pack-reused 316
+Receiving objects: 100% (316/316), 141.52 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (181/181), done.
+</code></pre></div></div>
+
+<p>Now, using the instructions in the README.md file, 
+all we need to do to complete the install is to <code class="highlighter-rouge">cd</code> 
+into the seqtk folder and run the command <code class="highlighter-rouge">make</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ cd seqtk
+[remote]$ make
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc -g -Wall -O2 -Wno-unused-function seqtk.c -o seqtk -lz -lm
+seqtk.c: In function ‘stk_comp’:
+seqtk.c:399:16: warning: variable ‘lc’ set but not used [-Wunused-but-set-variable]
+    int la, lb, lc, na, nb, nc, cnt[11];
+                ^
+</code></pre></div></div>
+
+<p>It’s done!
+Now all we need to do to use the program is invoke it like any other program.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ ./seqtk
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage:   seqtk &lt;command&gt; &lt;arguments&gt;
+Version: 1.2-r101-dirty
+
+Command: seq       common transformation of FASTA/Q
+         comp      get the nucleotide composition of FASTA/Q
+         sample    subsample sequences
+         subseq    extract subsequences from FASTA/Q
+         fqchk     fastq QC (base/quality summary)
+         mergepe   interleave two PE FASTA/Q files
+         trimfq    trim FASTQ using the Phred algorithm
+
+         hety      regional heterozygosity
+         gc        identify high- or low-GC regions
+         mutfa     point mutate FASTA at specified positions
+         mergefa   merge two FASTA/Q files
+         famask    apply a X-coded FASTA to a source FASTA
+         dropse    drop unpaired from interleaved PE FASTA/Q
+         rename    rename sequence names
+         randbase  choose a random base from hets
+         cutN      cut sequence at long N
+         listhet   extract the position of each het
+
+</code></pre></div></div>
+
+<p>We’ve successfully installed our first piece of software!</p>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>Load software with <code class="highlighter-rouge">module load softwareName</code></p>
+</li>
+    
+    <li><p>Unload software with <code class="highlighter-rouge">module purge</code></p>
+</li>
+    
+    <li><p>The module system handles software versioning and package conflicts for you automatically.</p>
+</li>
+    
+    <li><p>You can edit your <code class="highlighter-rouge">.bashrc</code> file to automatically load a software package.</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../12-scheduler/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../14-transferring-files/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/13-modules.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Writing and reading files</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/03-files.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../02-navigation/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Writing and reading files</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../04-wildcards-pipes/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 30 min
+      <br/>
+      <strong>Exercises:</strong> 15 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I create/move/delete files?</p>
+</li>
+	
+	<li><p>How do I edit files?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Learn to use the <code class="highlighter-rouge">nano</code> text editor.</p>
+</li>
+	
+	<li><p>Understand how to move, create, and delete files.</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<p>Now that we know how to move around and look at things, let’s learn how to read, write, and handle files!
+We’ll start by moving back to our home directory:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~
+</code></pre></div></div>
+
+<p>What if we want to make a file? 
+There are a few ways of doing this, the easiest of which is simply using a text editor. 
+For this lesson, we are going to us <code class="highlighter-rouge">nano</code>, since it’s super easy to use.</p>
+
+<p>To use <code class="highlighter-rouge">nano</code> on a file, simply type <code class="highlighter-rouge">nano filename</code>. If the file does not exist, it will be created. 
+<code class="highlighter-rouge">^O</code> (ctrl + O) saves the file, and <code class="highlighter-rouge">^X</code> quits. 
+If you have not saved your file upon trying to quit, it will ask you if you want to save.</p>
+
+<blockquote class="callout">
+  <h2 id="using-vim-as-a-text-editor">Using <code class="highlighter-rouge">vim</code> as a text editor</h2>
+  <p>From time to time, you may encounter the <code class="highlighter-rouge">vim</code> text editor.
+Although <code class="highlighter-rouge">vim</code> isn’t the easiest or most user-friendly of text editors, 
+you’ll be able to find it on any system and it has many more features than <code class="highlighter-rouge">nano</code>.</p>
+
+  <p><code class="highlighter-rouge">vim</code> has several modes, a “command” mode (for doing big operations, like saving and quitting) 
+and an “insert” mode. You can switch to insert mode with the <code class="highlighter-rouge">i</code> key, and command mode with <code class="highlighter-rouge">Esc</code>.</p>
+
+  <p>In insert mode, you can type more or less normally. In command mode there are a few commands you should be aware of:</p>
+
+  <ul>
+    <li><code class="highlighter-rouge">:q!</code> - quit, without saving</li>
+    <li><code class="highlighter-rouge">:wq</code> - save and quit</li>
+    <li><code class="highlighter-rouge">dd</code> - cut/delete a line</li>
+    <li><code class="highlighter-rouge">y</code> - paste a line</li>
+  </ul>
+</blockquote>
+
+<p>Let’s make a new file now, type whatever you want in it, and save it.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano test.txt
+</code></pre></div></div>
+
+<p><img src="/fig/nano-screenshot.png" alt="Nano in action" /></p>
+
+<p>Do a quick check to confirm our file was created.</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test.txt
+</code></pre></div></div>
+
+<p>Let’s read our file now. There are a few different ways of doing this, the simplest of which is simply reading the entire file with <code class="highlighter-rouge">cat</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat test.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is the contents of our test file.
+</code></pre></div></div>
+
+<p>Although <code class="highlighter-rouge">cat</code> may not seem like an intuitive command with which to open files, it stands for “concatenate”- giving it multiple arguments will print out one file followed by the contents of the next, and so on.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat test.txt test.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is the contents of our test file.
+This is the contents of our test file.
+</code></pre></div></div>
+
+<p>We’ve successfully created a file. What about a directory? We’ve actually done this before, using <code class="highlighter-rouge">mkdir</code>.</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir files
+$ ls
+</code></pre></div></div>
+
+<h2 id="moving-and-copying-files">Moving and copying files</h2>
+
+<p>To practice moving files, we will move <code class="highlighter-rouge">test.txt</code> to that directory with <code class="highlighter-rouge">mv</code> (move). <code class="highlighter-rouge">mv</code>’s syntax is relatively simple, and works for both files and directories <code class="highlighter-rouge">mv &lt;file/directory&gt; &lt;path to new location&gt;</code></p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv test.txt files
+$ cd files
+$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test.txt
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">test.txt</code> isn’t a very descriptive name. How do we go about changing it?</p>
+
+<p>It turns out that the way to rename files and folders is with <code class="highlighter-rouge">mv</code> again.
+Although this may not seem intuitive at first, think of it as moving a file
+to be stored under a different name. The syntax is quite similar to moving
+files: <code class="highlighter-rouge">mv oldName newName</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mv test.txt newname.testfile
+$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>newname.testfile
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="file-extensions-are-arbitrary">File extensions are arbitrary</h2>
+
+  <p>In the last example, we changed both a file’s name and extension at the same time. 
+On UNIX systems, file extensions (like <code class="highlighter-rouge">.txt</code>) are arbitrary. 
+A file is a <code class="highlighter-rouge">.txt</code> file only because we say it is. 
+Changing the name or extension of the file will <em>never</em> change a file’s contents, 
+so you are free to rename things as you wish.
+With that in mind, however, 
+file extensions are a useful tool for keeping track of what type of data it contains.
+A <code class="highlighter-rouge">.txt</code> file typically contains text, for instance.</p>
+</blockquote>
+
+<p>What if we want to copy a file, instead of simply renaming or moving it? 
+Use <code class="highlighter-rouge">cp</code> (an abbreviated name for “copy”). 
+This command has to different uses that work in the same way as <code class="highlighter-rouge">mv</code>:</p>
+
+<ul>
+  <li>
+    <p>Copy to same directory (copied file is renamed): <code class="highlighter-rouge">cp file newFilename</code></p>
+  </li>
+  <li>
+    <p>Copy to other directory (copied file retains original name): <code class="highlighter-rouge">cp file directory</code></p>
+  </li>
+</ul>
+
+<p>Let’s try this out.</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cp newname.testfile copy.testfile
+$ ls
+$ cp newname.testfile ..
+$ cd ..
+$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>newname.testfile copy.testfile
+files documents newname.testfile
+</code></pre></div></div>
+
+<h2 id="removing-files">Removing files</h2>
+
+<p>We’ve begun to clutter up our workspace with all of the directories and files we’ve been making. 
+Let’s learn how to get rid of them. 
+One important note before we start… <strong>when you delete a file on UNIX systems, they are gone <em>forever</em></strong>. 
+There is no “recycle bin” or “trash”. 
+Once a file is deleted, it is gone, never to return. 
+So be <em>very</em> careful when deleting files.</p>
+
+<p>Files are deleted with <code class="highlighter-rouge">rm file [moreFiles]</code>. To delete the <code class="highlighter-rouge">newname.testfile</code> in our current directory:</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls
+$ rm newname.testfile
+$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>files Documents newname.testfile
+files Documents
+</code></pre></div></div>
+
+<p>That was simple enough. 
+Directories are deleted in a similar manner using <code class="highlighter-rouge">rmdir</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls
+$ rmdir Documents
+$ rmdir files
+$ ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>files Documents
+rmdir: failed to remove `files/': Directory not empty
+files
+</code></pre></div></div>
+
+<p>What happened? As it turns out, <code class="highlighter-rouge">rmdir</code> is unable to remove directories that
+have stuff in them. To delete a directory and everything inside it, we will
+use a special variant of <code class="highlighter-rouge">rm</code>, <code class="highlighter-rouge">rm -rf directory</code>. This is probably the
+scariest command on UNIX- it will force delete a directory and all of its
+contents without prompting. <strong>ALWAYS</strong> double check your typing before using
+it… if you leave out the arguments, it will attempt to delete everything on
+your file system that you have permission to delete. So when deleting
+directories be very, very careful.</p>
+
+<blockquote class="callout">
+  <h2 id="what-happens-when-you-use-rm--rf-accidentally">What happens when you use <code class="highlighter-rouge">rm -rf</code> accidentally</h2>
+
+  <p>Steam is a major online sales platform for PC videogames with over 125 million users. 
+Despite this, it hasn’t always had the most stable or error-free code.</p>
+
+  <p>In January 2015, user kevyin on GitHub 
+<a href="https://github.com/ValveSoftware/steam-for-linux/issues/3671">reported that Steam’s Linux client had deleted every file on his computer</a>. 
+It turned out that one of the Steam programmers had added the following line: <code class="highlighter-rouge">rm -rf "$STEAMROOT/"*</code>. 
+Due to the way that Steam was set up, the variable <code class="highlighter-rouge">$STEAMROOT</code> was never initialized, meaning the statement evaluated to <code class="highlighter-rouge">rm -rf /*</code>. 
+This coding error in the Linux client meant that Steam deleted every single file on a computer when run in certain scenarios (including connected external hard drives). 
+Moral of the story: <strong>be very careful</strong> when using <code class="highlighter-rouge">rm -rf</code>!</p>
+</blockquote>
+
+<h2 id="looking-at-files">Looking at files</h2>
+
+<p>Sometimes it’s not practical to read an entire file with <code class="highlighter-rouge">cat</code>- the file
+might be way too large, take a long time to open, or maybe we want to only
+look at a certain part of the file. As an example, we are going to look at a
+large and complex file type used in bioinformatics- a .gtf file. The GTF2
+format is commonly used to describe the location of genetic features in a
+genome.</p>
+
+<p>Let’s grab and unpack a set of demo files for use later.
+To do this, we’ll use <code class="highlighter-rouge">wget</code> (<code class="highlighter-rouge">wget link</code> downloads a file from a link).</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget http://hpc-carpentry.github.io/hpc-intro/files/bash-lesson.tar.gz
+</code></pre></div></div>
+
+<p>You’ll commonly encounter <code class="highlighter-rouge">.tar.gz</code> archives while working in UNIX. 
+To extract the files from a <code class="highlighter-rouge">.tar.gz</code> file, we run the command <code class="highlighter-rouge">tar -xvf filename.tar.gz</code>:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tar -xvf bash-lesson.tar.gz
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dmel-all-r6.19.gtf
+dmel_unique_protein_isoforms_fb_2016_01.tsv
+gene_association.fb
+SRR307023_1.fastq
+SRR307023_2.fastq
+SRR307024_1.fastq
+SRR307024_2.fastq
+SRR307025_1.fastq
+SRR307025_2.fastq
+SRR307026_1.fastq
+SRR307026_2.fastq
+SRR307027_1.fastq
+SRR307027_2.fastq
+SRR307028_1.fastq
+SRR307028_2.fastq
+SRR307029_1.fastq
+SRR307029_2.fastq
+SRR307030_1.fastq
+SRR307030_2.fastq
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="unzipping-files">Unzipping files</h2>
+
+  <p>We just unzipped a .tar.gz file for this example. What if we run into other file formats that we need to unzip? Just use the handy reference below:</p>
+
+  <ul>
+    <li><code class="highlighter-rouge">gunzip</code> unzips .gz files</li>
+    <li><code class="highlighter-rouge">unzip</code> unzips .zip files</li>
+    <li><code class="highlighter-rouge">unrar</code> unzips .rar files</li>
+    <li><code class="highlighter-rouge">tar -xvf</code> unzips .tar.gz and .tar.bz2 files</li>
+  </ul>
+</blockquote>
+
+<p>That is a lot of files!
+One of these files, <code class="highlighter-rouge">dmel-all-r6.19.gtf</code> is extremely large,
+and contains every annotated feature in the <em>Drosophila melanogaster</em> genome. 
+It’s a huge file- what happens if we run <code class="highlighter-rouge">cat</code> on it? (Press <code class="highlighter-rouge">Ctrl + C</code> to stop it).</p>
+
+<p>So, <code class="highlighter-rouge">cat</code> is a really bad option when reading big files… 
+it scrolls through the entire file far too quickly!
+What are the alternatives? Try all of these out and see which ones you like best!</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">head file</code> - Print the top 10 lines in a file to the console. You can control the number of lines you see with the <code class="highlighter-rouge">-n numberOfLines</code> flag.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">tail file</code> - Same as <code class="highlighter-rouge">head</code>, but prints the last 10 lines in a file to the console.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">less file</code> - Opens a file and display as much as possible on-screen. You can scroll with <code class="highlighter-rouge">Enter</code> or the arrow keys on your keyboard. Press <code class="highlighter-rouge">q</code> to close the viewer.</p>
+  </li>
+</ul>
+
+<p>Out of <code class="highlighter-rouge">cat</code>, <code class="highlighter-rouge">head</code>, <code class="highlighter-rouge">tail, and </code>less`, which method of reading files is your favorite? Why?</p>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>File extensions are entirely arbitrary.</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../02-navigation/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../04-wildcards-pipes/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/03-files.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

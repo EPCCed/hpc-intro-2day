@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Moving around and looking at things</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/02-navigation.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../01-connecting/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Moving around and looking at things</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../03-files/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 15 min
+      <br/>
+      <strong>Exercises:</strong> 5 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>How do I navigate and look around the system?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Learn how to navigate around directories and look at their contents</p>
+</li>
+	
+	<li><p>Explain the difference between a file and a directory.</p>
+</li>
+	
+	<li><p>Translate an absolute path into a relative path and vice versa.</p>
+</li>
+	
+	<li><p>Identify the actual command, flags, and filenames in a command-line call.</p>
+</li>
+	
+	<li><p>Demonstrate the use of tab completion, and explain its advantages.</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<p>At the point in this lesson, we’ve just logged into the system. 
+Nothing has happened yet, and we’re not going to be able to do anything until we learn a few basic commands. 
+By the end of this lesson, you will know how to “move around” the system and look at what’s there.</p>
+
+<p>Right now, all we see is something that looks like this:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$
+</code></pre></div></div>
+
+<p>The dollar sign is a <strong>prompt</strong>, which shows us that the shell is waiting for input;
+your shell may use a different character as a prompt and may add information before
+the prompt. When typing commands, either from these lessons or from other sources,
+do not type the prompt, only the commands that follow it.</p>
+
+<p>Type the command <code class="highlighter-rouge">whoami</code>, then press the Enter key (sometimes marked Return) to send the command to the shell. The command’s output is the ID of the current user, i.e., it shows us who the shell thinks we are:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ whoami
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jeff
+</code></pre></div></div>
+
+<p>More specifically, when we type <code class="highlighter-rouge">whoami</code> the shell:</p>
+
+<ol>
+  <li>finds a program called <code class="highlighter-rouge">whoami</code>,</li>
+  <li>runs that program,</li>
+  <li>displays that program’s output, then</li>
+  <li>displays a new prompt to tell us that it’s ready for more commands.</li>
+</ol>
+
+<p>Next,
+let’s find out where we are by running a command called <code class="highlighter-rouge">pwd</code> (which stands for “print working directory”). At any moment, our <strong>current working directory</strong> (where we are) is the directory that the computer assumes we want to run commands in unless we explicitly specify something else.
+Here, the computer’s response is <code class="highlighter-rouge">/home/jeff</code>, which is Jeff’s <strong>home directory</strong>:
+Note that the location of your home directory may differ from system to system.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pwd
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/jeff
+</code></pre></div></div>
+
+<p>So, we know where we are. How do we look and see what’s in our current directory?</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">ls</code> prints the names of the files and directories in the current directory in alphabetical order, arranged neatly into columns.</p>
+
+<blockquote class="challenge">
+  <h2 id="differences-between-remote-and-local-system">Differences between remote and local system</h2>
+
+  <p>Open a second terminal window on your local computer and run the <code class="highlighter-rouge">ls</code> command without logging in remotely.
+What differences do you see?</p>
+
+  <blockquote class="solution">
+    <h2 id="solution">Solution</h2>
+    <p>You would likely see something more like this:</p>
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Applications Documents    Library      Music        Public
+Desktop      Downloads    Movies       Pictures
+</code></pre></div>    </div>
+    <p>In addition you should also note that the preamble before the prompt (<code class="highlighter-rouge">$</code>) is different.  This is very important for making sure you know what system you are issuing commands on when in the shell.</p>
+  </blockquote>
+</blockquote>
+
+<p>If nothing shows up when you run <code class="highlighter-rouge">ls</code>, it means that nothing’s there. Let’s make a directory for us to play with.</p>
+
+<p><code class="highlighter-rouge">mkdir &lt;new directory name&gt;</code> makes a new directory with that name in your current location. Notice that this command required two pieces of input: the actual name of the command (<code class="highlighter-rouge">mkdir</code>) and an argument that specifies the name of the directory you wish to create.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir documents
+</code></pre></div></div>
+
+<p>Let’s us <code class="highlighter-rouge">ls</code> again. What do we see?</p>
+
+<p>Our folder is there, awesome. What if we wanted to go inside it and do stuff there?</p>
+
+<p>We will use the <code class="highlighter-rouge">cd</code> (change directory) command to move around. Let’s <code class="highlighter-rouge">cd</code> into our new Documents folder.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd documents
+$ pwd
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/documents
+</code></pre></div></div>
+
+<p>Now that we know how to use <code class="highlighter-rouge">cd</code>, we can go anywhere. That’s a lot of responsibility. What happens if we get “lost” and want to get back to where we started?</p>
+
+<p>To go back to your home directory, the following two commands will work:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /home/yourUserName
+cd ~
+</code></pre></div></div>
+
+<p>What is the <code class="highlighter-rouge">~</code> character? When using the shell, <code class="highlighter-rouge">~</code> is a shortcut that represents <code class="highlighter-rouge">/home/yourUserName</code>.</p>
+
+<p>A quick note on the structure of a UNIX (Linux/Mac/Android/Solaris/etc) filesystem. Directories and absolute paths (i.e. exact position in the system) are always prefixed with a <code class="highlighter-rouge">/</code>. <code class="highlighter-rouge">/</code> is the “root” or base directory.</p>
+
+<p>Let’s go there now, look around, and then return to our home directory.</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /
+ls
+cd ~
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bin   cvmfs  etc   initrd  lib64  localscratch  mnt  opt   project  root  sbin     srv  tmp  var
+boot  dev    home  lib     local  media         nix  proc  ram      run   scratch  sys  usr  work
+</code></pre></div></div>
+
+<p>The “home” directory is the one where we generally want to keep all of our files. 
+Other folders on a UNIX OS contain system files, and get modified and changed as you install new software or upgrade your OS.</p>
+
+<blockquote class="callout">
+  <h2 id="using-hpc-filesystems">Using HPC filesystems</h2>
+  <p>On HPC systems, you have a number of places where you can store your files. These differ in both the amount of space allocated and whether or not they are backed up.</p>
+
+  <p>File storage locations:</p>
+
+  <ul>
+    <li><strong>Network filesystem</strong> - Your home directory is an example of a network filesystem. Data stored here is available throughout the HPC system and files stored here are backed up. Files stored here are typically slower to access, the data is actually stored on another computer and is being transmitted and made available over the network! <code class="highlighter-rouge">/project</code> and <code class="highlighter-rouge">/home</code> are both network filesystems.</li>
+    <li><strong>Scratch</strong> - Some systems may offer “scratch” space. Scratch space is typically faster to use than your home directory or network filesystem, but is not usually backed up, and should not be used for long term storage. In the last example, <code class="highlighter-rouge">/scratch</code> is a scratch drive.</li>
+    <li><strong>Local scratch (job only)</strong> - Some systems may offer local scratch space while executing a job. Such storage is very fast, but will be deleted at the end of your job.</li>
+    <li><strong>Ramdisk (job only)</strong> - Some systems may let you store files in a “ramdisk” while running a job, where files are stored directly in the computer’s memory. This extremely fast, but files stored here will count against your job’s memory usage and be deleted at the end of your job.</li>
+  </ul>
+</blockquote>
+
+<p>There are several other useful shortcuts you should be aware of.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">.</code> represents your current directory</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">..</code> represents the “parent” directory of your current location</p>
+  </li>
+  <li>
+    <p>While typing nearly <em>anything</em>, you can have bash try to autocomplete what you are typing by pressing the <code class="highlighter-rouge">tab</code> key.</p>
+  </li>
+</ul>
+
+<p>Let’s try these out now:</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ./documents
+$ pwd
+$ cd ..
+$ pwd
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/jeff/documents
+/home/jeff
+</code></pre></div></div>
+
+<p>Many commands also have multiple behaviors that you can invoke with command
+line ‘flags.’ What is a flag? It’s generally just your command followed by a
+‘-‘ and the name of the flag (sometimes it’s ‘–’ followed by the name of the
+flag. You follow the flag(s) with any additional arguments you might need.</p>
+
+<p>We’re going to demonstrate a couple of these “flags” using <code class="highlighter-rouge">ls</code>.</p>
+
+<p>Show hidden files with <code class="highlighter-rouge">-a</code>. Hidden files are files that begin with <code class="highlighter-rouge">.</code>,
+these files will not appear otherwise, but that doesn’t mean they aren’t there!
+“Hidden” files are not hidden for security purposes, 
+they are usually just config files and other tempfiles 
+that the user doesn’t necessarily need to see all the time.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -a
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.   .bash_history  .bash_profile  documents  .oracle_jre_usage  .Xauthority
+..  .bash_logout   .bashrc        .licenses  .pki
+</code></pre></div></div>
+
+<p>Notice how both <code class="highlighter-rouge">.</code> and <code class="highlighter-rouge">..</code> are visible as hidden files.
+Show files, their size in bytes, date last modified, permissions, and other things with <code class="highlighter-rouge">-l</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -l
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drwxr-xr-x 2 jeff jeff 4096 Jan 14 17:31 documents
+</code></pre></div></div>
+
+<p>This is a lot of information to take in at once, but we will explain this later! <code class="highlighter-rouge">ls -l</code> is <em>extremely</em> useful, and tells you almost everything you need to know about your files without actually looking at them.</p>
+
+<p>We can also use multiple flags at the same time!</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -l -a
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drwx------.    6 jeff jeff  4096 Jan 14 17:31 .
+drwxrwxr-x  2805 root root 98304 Jan 12 12:03 ..
+-rw-------     1 jeff jeff    63 Jan  3 11:32 .bash_history
+-rw-r--r--.    1 jeff jeff    18 Jan  2 14:20 .bash_logout
+-rw-r--r--.    1 jeff jeff   193 Jan  2 14:20 .bash_profile
+-rw-r--r--.    1 jeff jeff   231 Jan  2 14:20 .bashrc
+drwxr-xr-x     2 jeff jeff  4096 Jan 14 17:31 documents
+drwxr-xr-x     2 jeff jeff  4096 Jan 14 17:31 .licenses
+drwxr-xr-x     2 jeff jeff  4096 Jan  3 11:30 .oracle_jre_usage
+drwxr-----     3 jeff jeff  4096 Jan  3 11:32 .pki
+-rw-------     1 jeff jeff   106 Jan 14 17:31 .Xauthority
+</code></pre></div></div>
+
+<p>Flags generally precede any arguments passed to a UNIX command. <code class="highlighter-rouge">ls</code> actually takes an extra argument that specifies a directory to look into.
+When you use flags and arguments together, they syntax (how it’s supposed to be typed) generally looks something like this:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ command &lt;flags/options&gt; &lt;arguments&gt;
+</code></pre></div></div>
+
+<p>So using <code class="highlighter-rouge">ls -l -a</code> on a different directory than the one we’re in would look something like:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -l -a ~/documents
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drwx------  6 jeff jeff 4096 Jan 14 17:31 .
+drwxrwxr-x. 2 jeff jeff 4096 Jan 14 17:31 ..
+</code></pre></div></div>
+
+<h2 id="where-to-go-for-help">Where to go for help?</h2>
+
+<p>How did I know about the <code class="highlighter-rouge">-l</code> and <code class="highlighter-rouge">-a</code> options? Is there a manual we can look at for help when we need help?
+There is a very helpful manual for most UNIX commands: <code class="highlighter-rouge">man</code> (if you’ve ever heard of a “man page” for something, this is what it is).</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ man ls
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LS(1)                                                   User Commands                                                  LS(1)
+
+NAME
+       ls - list directory contents
+
+SYNOPSIS
+       ls [OPTION]... [FILE]...
+
+DESCRIPTION
+       List  information  about the FILEs (the current directory by default).  Sort entries alphabetically if none of -cftu‐
+       vSUX nor --sort is specified.
+
+       Mandatory arguments to long options are mandatory for short options too.
+Manual page ls(1) line 1 (press h for help or q to quit)
+</code></pre></div></div>
+
+<p>To navigate through the <code class="highlighter-rouge">man</code> pages,
+you may use the up and down arrow keys to move line-by-line,
+or try the spacebar and “b” keys to skip up and down by full page.
+Quit the <code class="highlighter-rouge">man</code> pages by typing “q”.</p>
+
+<p>Alternatively, most commands you run will have a 
+<code class="highlighter-rouge">--help</code> option that displays addition information 
+For instance, with <code class="highlighter-rouge">ls</code>:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls --help
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+      --author               with -l, print the author of each file
+  -b, --escape               print C-style escapes for nongraphic characters
+      --block-size=SIZE      scale sizes by SIZE before printing them; e.g.,
+                               '--block-size=M' prints sizes in units of
+                               1,048,576 bytes; see SIZE format below
+  -B, --ignore-backups       do not list implied entries ending with ~
+
+# further output omitted for clarity
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="unsupported-command-line-options">Unsupported command-line options</h2>
+  <p>If you try to use an option that is not supported, <code class="highlighter-rouge">ls</code> and other programs
+will print an error message similar to this:</p>
+
+  <div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ ls -j
+</code></pre></div>  </div>
+
+  <div class="error highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls: invalid option -- 'j'
+Try 'ls --help' for more information.
+</code></pre></div>  </div>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="looking-at-documentation">Looking at documentation</h2>
+  <p>Looking at the man page for <code class="highlighter-rouge">ls</code> or using <code class="highlighter-rouge">ls --help</code>, what does the <code class="highlighter-rouge">-h</code> (<code class="highlighter-rouge">--human-readable</code>) option do?</p>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="absolute-vs-relative-paths">Absolute vs Relative Paths</h2>
+
+  <p>Starting from <code class="highlighter-rouge">/Users/amanda/data/</code>,
+which of the following commands could Amanda use to navigate to her home directory,
+which is <code class="highlighter-rouge">/Users/amanda</code>?</p>
+
+  <ol>
+    <li><code class="highlighter-rouge">cd .</code></li>
+    <li><code class="highlighter-rouge">cd /</code></li>
+    <li><code class="highlighter-rouge">cd /home/amanda</code></li>
+    <li><code class="highlighter-rouge">cd ../..</code></li>
+    <li><code class="highlighter-rouge">cd ~</code></li>
+    <li><code class="highlighter-rouge">cd home</code></li>
+    <li><code class="highlighter-rouge">cd ~/data/..</code></li>
+    <li><code class="highlighter-rouge">cd</code></li>
+    <li><code class="highlighter-rouge">cd ..</code></li>
+  </ol>
+
+  <blockquote class="solution">
+    <h2 id="solution-1">Solution</h2>
+    <ol>
+      <li>No: <code class="highlighter-rouge">.</code> stands for the current directory.</li>
+      <li>No: <code class="highlighter-rouge">/</code> stands for the root directory.</li>
+      <li>No: Amanda’s home directory is <code class="highlighter-rouge">/Users/amanda</code>.</li>
+      <li>No: this goes up two levels, i.e. ends in <code class="highlighter-rouge">/Users</code>.</li>
+      <li>Yes: <code class="highlighter-rouge">~</code> stands for the user’s home directory, in this case <code class="highlighter-rouge">/Users/amanda</code>.</li>
+      <li>No: this would navigate into a directory <code class="highlighter-rouge">home</code> in the current directory if it exists.</li>
+      <li>Yes: unnecessarily complicated, but correct.</li>
+      <li>Yes: shortcut to go back to the user’s home directory.</li>
+      <li>Yes: goes up one level.</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="relative-path-resolution">Relative Path Resolution</h2>
+
+  <p>Using the filesystem diagram below, if <code class="highlighter-rouge">pwd</code> displays <code class="highlighter-rouge">/Users/thing</code>,
+what will <code class="highlighter-rouge">ls -F ../backup</code> display?</p>
+
+  <ol>
+    <li><code class="highlighter-rouge">../backup: No such file or directory</code></li>
+    <li><code class="highlighter-rouge">2012-12-01 2013-01-08 2013-01-27</code></li>
+    <li><code class="highlighter-rouge">2012-12-01/ 2013-01-08/ 2013-01-27/</code></li>
+    <li><code class="highlighter-rouge">original/ pnas_final/ pnas_sub/</code></li>
+  </ol>
+
+  <p><img src="../fig/filesystem-challenge.svg" alt="File System for Challenge Questions" /></p>
+
+  <blockquote class="solution">
+    <h2 id="solution-2">Solution</h2>
+    <ol>
+      <li>No: there <em>is</em> a directory <code class="highlighter-rouge">backup</code> in <code class="highlighter-rouge">/Users</code>.</li>
+      <li>No: this is the content of <code class="highlighter-rouge">Users/thing/backup</code>,
+but with <code class="highlighter-rouge">..</code> we asked for one level further up.</li>
+      <li>No: see previous explanation.</li>
+      <li>Yes: <code class="highlighter-rouge">../backup/</code> refers to <code class="highlighter-rouge">/Users/backup/</code>.</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="ls-reading-comprehension"><code class="highlighter-rouge">ls</code> Reading Comprehension</h2>
+
+  <p>Assuming a directory structure as in the above Figure
+(File System for Challenge Questions), if <code class="highlighter-rouge">pwd</code> displays <code class="highlighter-rouge">/Users/backup</code>,
+and <code class="highlighter-rouge">-r</code> tells <code class="highlighter-rouge">ls</code> to display things in reverse order,
+what command will display:</p>
+
+  <div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pnas_sub/ pnas_final/ original/
+</code></pre></div>  </div>
+
+  <ol>
+    <li><code class="highlighter-rouge">ls pwd</code></li>
+    <li><code class="highlighter-rouge">ls -r -F</code></li>
+    <li><code class="highlighter-rouge">ls -r -F /Users/backup</code></li>
+    <li>Either #2 or #3 above, but not #1.</li>
+  </ol>
+
+  <blockquote class="solution">
+    <h2 id="solution-3">Solution</h2>
+    <ol>
+      <li>No: <code class="highlighter-rouge">pwd</code> is not the name of a directory.</li>
+      <li>Yes: <code class="highlighter-rouge">ls</code> without directory argument lists files and directories
+in the current directory.</li>
+      <li>Yes: uses the absolute path explicitly.</li>
+      <li>Correct: see explanations above.</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="exploring-more-ls-arguments">Exploring More <code class="highlighter-rouge">ls</code> Arguments</h2>
+
+  <p>What does the command <code class="highlighter-rouge">ls</code> do when used with the <code class="highlighter-rouge">-l</code> and <code class="highlighter-rouge">-h</code> arguments?</p>
+
+  <p>Some of its output is about properties that we do not cover in this lesson (such
+as file permissions and ownership), but the rest should be useful
+nevertheless.</p>
+
+  <blockquote class="solution">
+    <h2 id="solution-4">Solution</h2>
+    <p>The <code class="highlighter-rouge">-l</code> arguments makes <code class="highlighter-rouge">ls</code> use a <strong>l</strong>ong listing format, showing not only
+the file/directory names but also additional information such as the file size
+and the time of its last modification. The <code class="highlighter-rouge">-h</code> argument makes the file size
+“<strong>h</strong>uman readable”, i.e. display something like <code class="highlighter-rouge">5.3K</code> instead of <code class="highlighter-rouge">5369</code>.</p>
+  </blockquote>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="listing-recursively-and-by-time">Listing Recursively and By Time</h2>
+
+  <p>The command <code class="highlighter-rouge">ls -R</code> lists the contents of directories recursively, i.e., lists
+their sub-directories, sub-sub-directories, and so on in alphabetical order
+at each level. The command <code class="highlighter-rouge">ls -t</code> lists things by time of last change, with
+most recently changed files or directories first.
+In what order does <code class="highlighter-rouge">ls -R -t</code> display things? Hint: <code class="highlighter-rouge">ls -l</code> uses a long listing
+format to view timestamps.</p>
+
+  <blockquote class="solution">
+    <h2 id="solution-5">Solution</h2>
+    <p>The directories are listed alphabetical at each level, the files/directories
+in each directory are sorted by time of last change.</p>
+  </blockquote>
+</blockquote>
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>Your current directory is referred to as the working directory.</p>
+</li>
+    
+    <li><p>To change directories, use <code class="highlighter-rouge">cd</code>.</p>
+</li>
+    
+    <li><p>To view files, use <code class="highlighter-rouge">ls</code>.</p>
+</li>
+    
+    <li><p>You can view help for a command with <code class="highlighter-rouge">man command</code> or <code class="highlighter-rouge">command --help</code>.</p>
+</li>
+    
+    <li><p>Hit <code class="highlighter-rouge">tab</code> to autocomplete whatever you’re currently typing.</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../01-connecting/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../03-files/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/02-navigation.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

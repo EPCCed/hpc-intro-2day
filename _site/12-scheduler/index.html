@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="last-modified" content="2018-02-27 13:51:00 +0000">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- meta "search-domain" used for google site search function google_search() -->
+    <meta name="search-domain" value="">
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/lesson.css" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon-swc.ico" />
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+    <title>Introduction to High-Performance Computing: Scheduling jobs</title>
+  </head>
+  <body>
+    <div class="container">
+      
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      
+      
+      <a href="https://software-carpentry.org" class="pull-left">
+        <img class="navbar-logo" src="../assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
+      </a>
+      
+
+      
+      <a class="navbar-brand" href="../">Home</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+	
+        <li><a href="../conduct/">Code of Conduct</a></li>
+
+	
+        
+        <li><a href="../setup/">Setup</a></li>
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+            <li><a href="../00-hpc-intro/">What is High Performance Computing?</a></li>
+            
+            <li><a href="../01-connecting/">Connecting to the cluster</a></li>
+            
+            <li><a href="../02-navigation/">Moving around and looking at things</a></li>
+            
+            <li><a href="../03-files/">Writing and reading files</a></li>
+            
+            <li><a href="../04-wildcards-pipes/">Wildcards and pipes</a></li>
+            
+            <li><a href="../05-scripts/">Scripts, variables, and loops</a></li>
+            
+            <li><a href="../11-cluster/">Working on a cluster</a></li>
+            
+            <li><a href="../12-scheduler/">Scheduling jobs</a></li>
+            
+            <li><a href="../13-modules/">Accessing software</a></li>
+            
+            <li><a href="../14-transferring-files/">Transferring files</a></li>
+            
+            <li><a href="../15-resources/">Using resources effectively</a></li>
+            
+            <li><a href="../16-responsiblity/">Using resources effectively</a></li>
+            
+            <li><a href="../17-hpc-fundamentals/">HPC Fundamentals</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+	
+        <li class="dropdown">
+          <a href="../" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="../reference/">Reference</a></li>
+            
+            <li><a href="../about/">About</a></li>
+            
+            <li><a href="../discuss/">Discussion</a></li>
+            
+            <li><a href="../figures/">Figures</a></li>
+            
+            <li><a href="../guide/">Instructor Notes</a></li>
+            
+          </ul>
+        </li>
+	
+
+	
+        <li><a href="../license/">License</a></li>
+	
+	<li><a href="/edit/gh-pages/_episodes/12-scheduler.md">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+	
+      </ul>
+      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../11-cluster/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+    <h3 class="maintitle"><a href="../">Introduction to High-Performance Computing</a></h3>
+    <h1 class="maintitle">Scheduling jobs</h1>
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../13-modules/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+<blockquote class="objectives">
+  <h2>Overview</h2>
+
+  <div class="row">
+    <div class="col-md-3">
+      <strong>Teaching:</strong> 45 min
+      <br/>
+      <strong>Exercises:</strong> 30 min
+    </div>
+    <div class="col-md-9">
+      <strong>Questions</strong>
+      <ul>
+	
+	<li><p>What is a scheduler and why are they used?</p>
+</li>
+	
+	<li><p>How do we submit a job?</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-9">
+      <strong>Objectives</strong>
+      <ul>
+	
+	<li><p>Submit a job and have it complete successfully.</p>
+</li>
+	
+	<li><p>Understand how to make resource requests.</p>
+</li>
+	
+	<li><p>Submit an interactive job.</p>
+</li>
+	
+      </ul>
+    </div>
+  </div>
+
+</blockquote>
+
+<p>An HPC system might have thousands of nodes and thousands of users.
+How do we decide who gets what and when?
+How do we ensure that a task is run with the resources it needs?
+This job is handled by a special piece of software called the scheduler.
+On an HPC system, the scheduler manages which jobs run where and when.</p>
+
+<blockquote class="challenge">
+  <h2 id="job-scheduling-roleplay-optional">Job scheduling roleplay (optional)</h2>
+
+  <p>Your instructor will divide you into groups taking on 
+different roles in the cluster (users, compute nodes 
+and the scheduler).  Follow their instructions as they 
+lead you through this exercise.  You will be emulating 
+how a job scheduling system works on the cluster.</p>
+
+  <p><a href="../guide">Notes for the instructor here</a></p>
+</blockquote>
+
+<p>The scheduler used in this lesson is SLURM.
+Although SLURM is not used everywhere, 
+running jobs is quite similar regardless of what software is being used.
+The exact syntax might change, but the concepts remain the same.</p>
+
+<h2 id="running-a-batch-job">Running a batch job</h2>
+
+<p>The most basic use of the scheduler is to run a command non-interactively.
+This is also referred to as batch job submission.
+In this case, a job is just a shell script.
+Let’s create a demo shell script to run as a test.</p>
+
+<blockquote class="challenge">
+  <h2 id="creating-our-test-job">Creating our test job</h2>
+
+  <p>Using your favorite text editor, create the following script and run it.
+Does it run on the cluster or just our login node?</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nb">echo</span> <span class="s1">'This script is running on:'</span>
+<span class="nb">hostname
+sleep </span>120
+</code></pre></div>  </div>
+</blockquote>
+
+<p>If you completed the previous challenge successfully, 
+you probably realize that there is a distinction between 
+running the job through the scheduler and just “running it”.
+To submit this job to the scheduler, we use the <code class="highlighter-rouge">sbatch</code> command.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ sbatch example-job.sh
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Submitted batch job 36855
+</code></pre></div></div>
+
+<p>And that’s all we need to do to submit a job. 
+To check on our job’s status, we use the command <code class="highlighter-rouge">squeue</code>.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ squeue -u yourUsername
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   JOBID     USER ACCOUNT           NAME  ST REASON    START_TIME                TIME  TIME_LEFT NODES CPU
+S
+   36856 yourUsername yourAccount example-job.sh   R None      2017-07-01T16:47:02       0:11      59:49     1
+1
+</code></pre></div></div>
+
+<p>We can see all the details of our job, most importantly that it is in the “R” or “RUNNING” state.
+Sometimes our jobs might need to wait in a queue (“PENDING”) or have an error.
+The best way to check our job’s status is with <code class="highlighter-rouge">squeue</code>.
+Of course, running <code class="highlighter-rouge">squeue</code> repeatedly to check on things can be a little tiresome.
+To see a real-time view of our jobs, we can use the <code class="highlighter-rouge">watch</code> command.
+<code class="highlighter-rouge">watch</code> reruns a given command at 2-second intervals. 
+Let’s try using it to monitor another job.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ sbatch example-job.sh
+[remote]$ watch squeue -u yourUsername
+</code></pre></div></div>
+
+<p>You should see an auto-updating display of your job’s status.
+When it finishes, it will disappear from the queue.
+Press <code class="highlighter-rouge">Ctrl-C</code> when you want to stop the <code class="highlighter-rouge">watch</code> command.</p>
+
+<h2 id="customizing-a-job">Customizing a job</h2>
+
+<p>The job we just ran used all of the schedulers default options.
+In a real-world scenario, that’s probably not what we want.
+The default options represent a reasonable minimum.
+Chances are, we will need more cores, more memory, more time, 
+among other special considerations.
+To get access to these resources we must customize our job script.</p>
+
+<p>Comments in UNIX (denoted by <code class="highlighter-rouge">#</code>) are typically ignored.
+But there are exceptions.
+For instance the special <code class="highlighter-rouge">#!</code> comment at the beginning of scripts
+specifies what program should be used to run it (typically <code class="highlighter-rouge">/bin/bash</code>).
+Schedulers like SLURM also have a special comment used to denote special 
+scheduler-specific options.
+Though these comments differ from scheduler to scheduler, 
+SLURM’s special comment is <code class="highlighter-rouge">#SBATCH</code>.
+Anything following the <code class="highlighter-rouge">#SBATCH</code> comment is interpreted as an instruction to the scheduler.</p>
+
+<p>Let’s illustrate this by example. 
+By default, a job’s name is the name of the script,
+but the <code class="highlighter-rouge">-J</code> option can be used to change the name of a job.</p>
+
+<p>Submit the following job (<code class="highlighter-rouge">sbatch example-job.sh</code>):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#SBATCH -J new_name</span>
+
+<span class="nb">echo</span> <span class="s1">'This script is running on:'</span>
+<span class="nb">hostname
+sleep </span>120
+</code></pre></div></div>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ squeue -u yourUsername
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   JOBID     USER ACCOUNT           NAME  ST REASON    START_TIME                TIME  TIME_LEFT NODES CPUS
+   38191 yourUsername yourAccount       new_name  PD Priority  N/A                       0:00    1:00:00     1  1
+</code></pre></div></div>
+
+<p>Fantastic, we’ve successfully changed the name of our job!</p>
+
+<blockquote class="challenge">
+  <h2 id="setting-up-email-notifications">Setting up email notifications</h2>
+
+  <p>Jobs on an HPC system might run for days or even weeks.
+We probably have better things to do than constantly check on the status of our job
+with <code class="highlighter-rouge">squeue</code>.
+Looking at the <a href="https://slurm.schedmd.com/sbatch.html">online documentation for <code class="highlighter-rouge">sbatch</code></a>
+(you can also google “sbatch slurm”),
+can you set up our test job to send you an email when it finishes?</p>
+
+  <p>Hint: you will need to use the <code class="highlighter-rouge">--mail-user</code> and <code class="highlighter-rouge">--mail-type</code> options.</p>
+</blockquote>
+
+<h3 id="resource-requests">Resource requests</h3>
+
+<p>But what about more important changes, such as the number of CPUs and memory for our jobs?
+One thing that is absolutely critical when working on an HPC system is specifying the 
+resources required to run a job.
+This allows the scheduler to find the right time and place to schedule our job.
+If you do not specify requirements (such as the amount of time you need), 
+you will likely be stuck with your site’s default resources,
+which is probably not what we want.</p>
+
+<p>The following are several key resource requests:</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">-c &lt;ncpus&gt;</code> - How many CPUs does your job need?</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">--mem=&lt;megabytes&gt;</code> - How much memory on a node does your job need in megabytes? You can also specify gigabytes using by adding a little “g” afterwards (example: <code class="highlighter-rouge">--mem=5g</code>)</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">--time &lt;days-hours:minutes:seconds&gt;</code> - How much real-world time (walltime) will your job take to run? The <code class="highlighter-rouge">&lt;days&gt;</code> part can be omitted.</p>
+  </li>
+</ul>
+
+<blockquote class="challenge">
+  <h2 id="submitting-resource-requests">Submitting resource requests</h2>
+
+  <p>Submit a job that will use 2 cpus, 4 gigabytes of memory, and 5 minutes of walltime.</p>
+</blockquote>
+
+<blockquote class="challenge">
+  <h2 id="job-environment-variables">Job environment variables</h2>
+
+  <p>When SLURM runs a job, it sets a number of environment variables for the job.
+One of these will let us check our work from the last problem.
+The <code class="highlighter-rouge">SLURM_CPUS_PER_TASK</code> variable is set to the number of CPUs we requested with <code class="highlighter-rouge">-c</code>.
+Using the <code class="highlighter-rouge">SLURM_CPUS_PER_TASK</code> variable, 
+modify your job so that it prints how many CPUs have been allocated.</p>
+</blockquote>
+
+<p>Resource requests are typically binding.
+If you exceed them, your job will be killed.
+Let’s use walltime as an example.
+We will request 30 seconds of walltime, 
+and attempt to run a job for two minutes.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c">#SBATCH -t 0:0:30</span>
+
+<span class="nb">echo</span> <span class="s1">'This script is running on:'</span>
+<span class="nb">hostname
+sleep </span>120
+</code></pre></div></div>
+
+<p>Submit the job and wait for it to finish. 
+Once it is has finished, check the log file.</p>
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ sbatch example-job.sh
+[remote]$ watch squeue -u yourUsername
+[remote]$ cat slurm-38193.out
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This job is running on:
+gra533
+slurmstepd: error: *** JOB 38193 ON gra533 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
+</code></pre></div></div>
+
+<p>Our job was killed for exceeding the amount of resources it requested.
+Although this appears harsh, this is actually a feature.
+Strict adherence to resource requests allows the scheduler to find the best possible place
+for your jobs.
+Even more importantly, 
+it ensures that another user cannot use more resources than they’ve been given.
+If another user messes up and accidentally attempts to use all of the CPUs or memory on a node, 
+SLURM will either restrain their job to the requested resources or kill the job outright.
+Other jobs on the node will be unaffected.
+This means that one user cannot mess up the experience of others,
+the only jobs affected by a mistake in scheduling will be their own.</p>
+
+<h2 id="canceling-a-job">Canceling a job</h2>
+
+<p>Sometimes we’ll make a mistake and need to cancel a job.
+This can be done with the <code class="highlighter-rouge">scancel</code> command.
+Let’s submit a job and then cancel it using its job number.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ sbatch example-job.sh
+[remote]$ squeue -u yourUsername
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Submitted batch job 38759
+
+   JOBID     USER ACCOUNT           NAME  ST REASON    START_TIME                TIME  TIME_LEFT NODES CPUS
+   38759 yourUsername yourAccount example-job.sh  PD Priority  N/A                       0:00       1:00     1    1
+</code></pre></div></div>
+
+<p>Now cancel the job with it’s job number. 
+Absence of any job info indicates that the job has been successfully canceled.</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ scancel 38759
+[remote]$ squeue -u yourUsername
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   JOBID     USER ACCOUNT           NAME  ST REASON    START_TIME                TIME  TIME_LEFT NODES CPUS
+</code></pre></div></div>
+
+<blockquote class="challenge">
+  <h2 id="cancelling-multiple-jobs">Cancelling multiple jobs</h2>
+
+  <p>We can also all of our jobs at once using the <code class="highlighter-rouge">-u</code> option. 
+This will delete all jobs for a specific user (in this case us).
+Note that you can only delete your own jobs.</p>
+
+  <p>Try submitting multiple jobs and then cancelling them all with 
+<code class="highlighter-rouge">scancel -u yourUsername</code>.</p>
+</blockquote>
+
+<h2 id="other-types-of-jobs">Other types of jobs</h2>
+
+<p>Up to this point, we’ve focused on running jobs in batch mode.
+SLURM also provides the ability to run tasks as a one-off or start an interactive session.</p>
+
+<p>There are very frequently tasks that need to be done semi-interactively.
+Creating an entire job script might be overkill, 
+but the amount of resources required is too much for a login node to handle.
+A good example of this might be building a genome index for alignment with a tool like <a href="https://ccb.jhu.edu/software/hisat2/index.shtml">HISAT2</a>.
+Fortunately, we can run these types of tasks as a one-off with <code class="highlighter-rouge">srun</code>.</p>
+
+<p><code class="highlighter-rouge">srun</code> runs a single command on the cluster and then exits.
+Let’s demonstrate this by running the <code class="highlighter-rouge">hostname</code> command with <code class="highlighter-rouge">srun</code>.
+(We can cancel an <code class="highlighter-rouge">srun</code> job with <code class="highlighter-rouge">Ctrl-c</code>.)</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ srun hostname
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gra752
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">srun</code> accepts all of the same options as <code class="highlighter-rouge">sbatch</code>.
+However, instead of specifying these in a script, 
+these options are specified on the command-line when starting a job.
+To submit a job that uses 2 cpus for instance, 
+we could use the following command
+(note that SLURM’s environment variables like <code class="highlighter-rouge">SLURM_CPUS_PER_TASK</code> are only available to batch jobs run with <code class="highlighter-rouge">sbatch</code>):</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ srun -c 2 echo "This job will use 2 cpus."
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This job will use 2 cpus.
+</code></pre></div></div>
+
+<h3 id="interactive-jobs">Interactive jobs</h3>
+
+<p>Sometimes, you will need a lot of resource for interactive use.
+Perhaps it’s our first time running an analysis 
+or we are attempting to debug something that went wrong with a previous job.
+Fortunately, SLURM makes it easy to start an interactive job with <code class="highlighter-rouge">srun</code>:</p>
+
+<div class="bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[remote]$ srun --x11 --pty bash
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="note-for-administrators">Note for administrators</h2>
+
+  <p>The <code class="highlighter-rouge">--x11</code> option will not work unless the <a href="https://github.com/hautreux/slurm-spank-x11">slurm-spank-x11</a> plugin is installed.
+You should also make sure <code class="highlighter-rouge">xeyes</code> is installed as an example X11 app 
+(<code class="highlighter-rouge">xorg-x11-apps</code> package on CentOS).
+If you do not have these installed, just have students use <code class="highlighter-rouge">srun --pty bash</code> instead.</p>
+</blockquote>
+
+<p>You should be presented with a bash prompt.
+Note that the prompt will likely change to reflect your new location, 
+in this case the worker node we are logged on.
+You can also verify this with <code class="highlighter-rouge">hostname</code>.</p>
+
+<blockquote class="challenge">
+  <h2 id="creating-remote-graphics">Creating remote graphics</h2>
+
+  <p>To demonstrate what happens when you create a graphics window on the remote node, 
+use the <code class="highlighter-rouge">xeyes</code> command. 
+A relatively adorable pair of eyes should pop up (press <code class="highlighter-rouge">Ctrl-c</code> to stop).</p>
+
+  <p>Note that this command requires you to have connected with X-forwarding enabled
+(<code class="highlighter-rouge">ssh -X username@host.address.ca</code>). If you are using a Mac, you must have installed
+XQuartz (and restarted your computer) for this to work.</p>
+</blockquote>
+
+<p>When you are done with the interactive job, type <code class="highlighter-rouge">exit</code> to quit your session.</p>
+
+
+
+<blockquote class="keypoints">
+  <h2>Key Points</h2>
+  <ul>
+    
+    <li><p>The scheduler handles how compute resources are shared between users.</p>
+</li>
+    
+    <li><p>Everything you do should be run through the scheduler.</p>
+</li>
+    
+    <li><p>A job is just a shell script.</p>
+</li>
+    
+    <li><p>If in doubt, request more resources than you will need.</p>
+</li>
+    
+  </ul>
+</blockquote>
+
+
+<div class="row">
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../11-cluster/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      
+    </h3>
+  </div>
+  <div class="col-md-10">
+    
+  </div>
+  <div class="col-md-1">
+    <h3>
+      
+      <a href="../13-modules/"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      
+    </h3>
+  </div>
+</div>
+
+
+      
+      
+<footer>
+  <div class="row">
+    <div class="col-md-6" align="left">
+      <h4>
+	Copyright &copy; 2016–2018
+	
+	<a href="https://software-carpentry.org">Software Carpentry Foundation</a>
+	
+      </h4>
+    </div>
+    <div class="col-md-6" align="right">
+      <h4>
+	
+	<a href="/edit/gh-pages/_episodes/12-scheduler.md">Edit on GitHub</a>
+	
+	/
+	<a href="/blob/gh-pages/CONTRIBUTING.md">Contributing</a>
+	/
+	<a href="/">Source</a>
+	/
+	<a href="/blob/gh-pages/CITATION">Cite</a>
+	/
+	<a href="mailto:lessons@software-carpentry.org">Contact</a>
+      </h4>
+    </div>
+  </div>
+</footer>
+
+      
+    </div>
+    
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/lesson.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-37305346-2', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
